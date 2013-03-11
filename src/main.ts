@@ -18,6 +18,27 @@ module App {
     }
   }
 
+
+  export class Vein extends enchant.Sprite {
+    constructor(obj){
+      super(10, 9);
+      console.log(obj);
+      this.x = obj["x"];
+      this.y = obj["y"];
+      this.image = Game.game.assets['img/robot0.png'];
+    }
+  }
+
+  export class Number extends enchant.Sprite {
+    constructor(obj){
+      super(10, 9);
+      console.log(obj);
+      this.x = obj["x"];
+      this.y = obj["y"];
+      this.image = Game.game.assets['img/robot0.png'];
+    }
+  }
+
   export class Bear extends enchant.Sprite {
     constructor(){
       super(32, 32);
@@ -44,7 +65,7 @@ module App {
       super(x, y);
       Game.game = this;
       this.fps = 24;
-      this.preload(['images/chara1.png', 'img/map48.png']);
+      this.preload(['images/chara1.png', 'img/map48.png', 'img/robot0.png', 'img/num.png']);
       this.onload = () => {
         var field = new Field();
         var bear = new Bear();
@@ -54,7 +75,15 @@ module App {
     }
     update(gameInfo: string): void {
       var gameObjects = JSON.parse(gameInfo);
-      console.log(gameObjects);
+      Game.game.drawVeins(gameObjects.veins);
+    }
+
+    drawVeins(veins): void {
+      var veinLength = veins.length
+      for (var i = 0 ; i < veinLength ; i++) {
+        var vein = new Vein(veins[i]);
+        this.rootScene.addChild(vein);
+      }
     }
   }
 }
