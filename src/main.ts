@@ -48,9 +48,13 @@ module App {
       this.onload = () => {
         var field = new Field();
         var bear = new Bear();
-        this.rootScene.addChild(bear);
         this.rootScene.addChild(field);
+        this.rootScene.addChild(bear);
       };
+    }
+    update(gameInfo: string): void {
+      var gameObjects = JSON.parse(gameInfo);
+      //console.log(gameObjects);
     }
   }
 }

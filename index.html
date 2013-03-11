@@ -17,6 +17,6 @@
 <body>
 	<div id="enchant-stage"></div>
 	<textarea id="commands"></textarea>
-	<button name="draw">draw</button>
+	<button name="draw" onclick="App.Game.game.update(document.getElementById('commands').value)">draw</button>
 </body>
 </html>
