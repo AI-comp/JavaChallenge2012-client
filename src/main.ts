@@ -54,7 +54,7 @@ module App {
     }
     update(gameInfo: string): void {
       var gameObjects = JSON.parse(gameInfo);
-      //console.log(gameObjects);
+      console.log(gameObjects);
     }
   }
 }
