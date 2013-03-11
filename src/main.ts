@@ -35,7 +35,8 @@ module App {
       console.log(obj);
       this.x = obj["x"];
       this.y = obj["y"];
-      this.image = Game.game.assets['img/robot0.png'];
+      this.image = Game.game.assets['img/mat01.png'];
+      Game.entities.push(this);
     }
   }
 
@@ -45,7 +46,8 @@ module App {
       console.log(obj);
       this.x = obj["x"];
       this.y = obj["y"];
-      this.image = Game.game.assets['img/robot0.png'];
+      this.image = Game.game.assets['img/num.png'];
+      Game.entities.push(this);
     }
   }
 
@@ -149,11 +151,15 @@ module App {
 
   export class Game extends enchant.Game {
     public static game: Game;
+
+    public static entities: Object[];
+
     constructor(x: number, y: number){
       super(x, y);
       Game.game = this;
+      Game.entities = new Array();
       this.fps = 24;
-      this.preload(['images/chara1.png', 'img/map48.png', 'img/robot0.png', 'img/num.png']);
+      this.preload(['images/chara1.png', 'img/map48.png', 'img/mat01.png', 'img/num.png']);
       this.preload(['img/map32.png', 'img/map48.png', 'img/hex32.png', 'img/hex48.png']);
       this.preload(['img/p0.png', 'img/p1.png', 'img/p2.png', 'img/p3.png', 'img/p4.png', 'img/p5.png'])
       this.preload(['img/bank.png']);
