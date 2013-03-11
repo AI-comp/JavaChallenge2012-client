@@ -29,13 +29,36 @@ module App {
   }
   */
 
-  export class Vein extends enchant.Sprite {
+  export class Vein extends enchant.Group {
     constructor(obj){
-      super(10, 9);
-      console.log(obj);
-      this.x = obj["x"];
-      this.y = obj["y"];
-      this.image = Game.game.assets['img/mat01.png'];
+      super();
+      this.moveTo(obj["x"] * 32, obj["y"] * 32)
+
+      var materialSprite = new enchant.Sprite(16, 16);
+      materialSprite.frame = obj["kind"];
+      materialSprite.image = Game.game.assets['img/material.png'];
+      this.addChild(materialSprite);
+
+      if (obj["owner"] != undefined) {
+        var ownerSprite = new enchant.Sprite(16, 16);
+        ownerSprite.frame = 6 + obj["owner"];
+        ownerSprite.image = Game.game.assets['img/material.png'];
+        this.addChild(ownerSprite);
+      }
+      Game.entities.push(this);
+    }
+  }
+
+  export class Squad extends enchant.Group {
+    constructor(obj){
+      super();
+      this.moveTo(obj["x"] * 32, obj["y"] * 32)
+
+      var robotSprite = new enchant.Sprite(10, 9);
+      robotSprite.frame = obj["owner"];
+      robotSprite.image = Game.game.assets['img/robot.png'];
+      this.addChild(robotSprite);
+
       Game.entities.push(this);
     }
   }
@@ -48,6 +71,9 @@ module App {
       this.y = obj["y"];
       this.image = Game.game.assets['img/num.png'];
       Game.entities.push(this);
+
+
+
     }
   }
 
@@ -152,14 +178,14 @@ module App {
   export class Game extends enchant.Game {
     public static game: Game;
 
-    public static entities: Object[];
+    public static entities: enchant.Node[];
 
     constructor(x: number, y: number){
       super(x, y);
       Game.game = this;
       Game.entities = new Array();
       this.fps = 24;
-      this.preload(['images/chara1.png', 'img/map48.png', 'img/mat01.png', 'img/num.png']);
+      this.preload(['images/chara1.png', 'img/map48.png', 'img/material.png', 'img/robot.png', 'img/num.png']);
       this.preload(['img/map32.png', 'img/map48.png', 'img/hex32.png', 'img/hex48.png']);
       this.preload(['img/p0.png', 'img/p1.png', 'img/p2.png', 'img/p3.png', 'img/p4.png', 'img/p5.png'])
       this.preload(['img/bank.png']);
@@ -223,9 +249,16 @@ module App {
         this.rootScene.addChild(rn0);
       };
     }
+
     update(gameInfo: string): void {
+      var entityLength = Game.entities.length
+      for (var i = 0 ; i < entityLength ; i++) {
+        this.rootScene.removeChild(Game.entities[i])
+      }
+
       var gameObjects = JSON.parse(gameInfo);
       Game.game.drawVeins(gameObjects.veins);
+      Game.game.drawSquads(gameObjects.squads);
     }
 
     drawVeins(veins): void {
@@ -233,6 +266,14 @@ module App {
       for (var i = 0 ; i < veinLength ; i++) {
         var vein = new Vein(veins[i]);
         this.rootScene.addChild(vein);
+      }
+    }
+
+    drawSquads(squads): void {
+      var squadLength = squads.length
+      for (var i = 0 ; i < squadLength ; i++) {
+        var squad = new Squad(squads[i]);
+        this.rootScene.addChild(squad);
       }
     }
   }
