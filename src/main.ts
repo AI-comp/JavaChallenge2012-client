@@ -70,6 +70,15 @@ module App {
       robotSprite.image = Game.game.assets['img/robot.png'];
       this.addChild(robotSprite);
 
+      var numberSprite = new Number({
+        "x": 10,
+        "y": 0,
+        "color": obj["owner"],
+        "number": obj["robots"]
+      })
+      this.addChild(numberSprite);
+
+
       Game.entities.push(this);
     }
   }
