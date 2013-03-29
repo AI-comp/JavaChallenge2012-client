@@ -45,6 +45,17 @@ module App {
         ownerSprite.image = Game.game.assets['img/material.png'];
         this.addChild(ownerSprite);
       }
+
+      if (obj["robots"] != undefined) {
+        var numberSprite = new Number({
+          "x": 0,
+          "y": 16,
+          "color": obj["owner"],
+          "number": obj["robots"]
+        })
+        this.addChild(numberSprite);
+      }
+
       Game.entities.push(this);
     }
   }
