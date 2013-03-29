@@ -63,41 +63,30 @@ module App {
     }
   }
 
-  export class Number extends enchant.Sprite {
+  export class Number extends enchant.Group {
     constructor(obj){
-      super(10, 9);
-      console.log(obj);
-      this.x = obj["x"];
-      this.y = obj["y"];
-      this.image = Game.game.assets['img/num.png'];
+      super();
+      this.moveTo(obj["x"], obj["y"])
+      var numString:string = obj["number"] + "";
+      var keta:number = numString.length;
+      var color:number = obj["color"];
+      var num:number = obj["number"];
+      for (var i = keta-1 ; i >= 0 ; i--) {
+        var digit = num % 10;
+        num -= digit;
+        num /= 10;
+
+        var numSprite  = new enchant.Sprite(6, 9);
+        numSprite.image = Game.game.assets['img/num.png'];
+        numSprite.frame = color*10+digit;
+        numSprite.x = i * 6;
+        numSprite.y = 0;
+        this.addChild(numSprite);
+      }
+
       Game.entities.push(this);
-
-
-
     }
   }
-
-  /*
-  export class Bear extends enchant.Sprite {
-    constructor(){
-      super(32, 32);
-      this.x = 32;
-      this.y = 32;
-      this.image = Game.game.assets['images/chara1.png'];
-
-      var self = this;
-      this.on('enterframe', () => self.update());
-    }
-
-    update(): void {
-      var input = Game.game.input
-      if (input.right) this.x += 2;
-      if (input.left)  this.x -= 2;
-      if (input.up)    this.y -= 2;
-      if (input.down)  this.y += 2;
-    }
-  }
-  */
 
   export class Hex32 extends enchant.Sprite {
     constructor(x: number, y: number) {
