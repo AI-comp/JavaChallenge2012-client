@@ -154,6 +154,18 @@ module App {
       this.x = x;
       this.y = y;
       this.image = Game.game.assets['img/veinSample.png'];
+
+      // おまじない
+      this.on('enterframe', () => this.update());
+    }
+
+    // 動き方(クラスごとに記述)
+    update(): void {
+      var input = Game.game.input
+      if (input.right) this.x += 2;
+      if (input.left) this.x -= 2;
+      if (input.up) this.y -= 2;
+      if (input.down) this.y += 2;
     }
   }
 
@@ -172,7 +184,6 @@ module App {
       this.x = x;
       this.y = y;
       this.image = Game.game.assets['img/rn0.png'];
-    }
   }
 
   export class Rn2 extends enchant.Sprite {
@@ -193,7 +204,7 @@ module App {
       super(x, y);
       Game.game = this;
       Game.entities = new Array();
-      this.fps = 24;
+      this.fps = 30;
       this.preload(['images/chara1.png', 'img/map48.png', 'img/material.png', 'img/robot.png', 'img/num.png']);
       this.preload(['img/map32.png', 'img/map48.png', 'img/hex32.png', 'img/hex48.png']);
       this.preload(['img/p0.png', 'img/p1.png', 'img/p2.png', 'img/p3.png', 'img/p4.png', 'img/p5.png'])
@@ -256,9 +267,11 @@ module App {
 
         rn0 = new Rn0(80+36+24+24, 0);
         this.rootScene.addChild(rn0);
+
       };
     }
 
+    /*
     update(gameInfo: string): void {
       var entityLength = Game.entities.length
       for (var i = 0 ; i < entityLength ; i++) {
@@ -269,6 +282,7 @@ module App {
       Game.game.drawVeins(gameObjects.veins);
       Game.game.drawSquads(gameObjects.squads);
     }
+    */
 
     drawVeins(veins): void {
       var veinLength = veins.length
