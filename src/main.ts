@@ -184,6 +184,7 @@ module App {
       this.x = x;
       this.y = y;
       this.image = Game.game.assets['img/rn0.png'];
+    }
   }
 
   export class Rn2 extends enchant.Sprite {
